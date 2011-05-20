@@ -14,11 +14,11 @@ and open the template in the editor.
         </form>
 
         <?php
-            include_once '../sones/GraphDSClient.class.php';
+            include_once '../source/GraphDBClient.class.php';
 
             $query = $_GET["q"];
             if($query !== null){
-             $GraphDSClient = new GraphDSClient("localhost", "test", "test");
+             $GraphDSClient = new GraphDBClient("localhost", "test", "test");
              $QueryResult = $GraphDSClient->Query($query);
 
              if($QueryResult !== null){
