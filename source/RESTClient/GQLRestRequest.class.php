@@ -28,14 +28,15 @@ class GQLRestRequest {
     private $Cred = null;
     private $UriGQLQuery;
 
-    public function __construct($UriGQLQuery, $Credentials, $acceptType) {
+    public function __construct($UriGQLQuery, $QueryString, $Credentials, $acceptType) {
 
         $this->UriGQLQuery = $UriGQLQuery;
         $this->acceptType = $acceptType;
-        $this->Verb = "GET";
+        $this->Verb = "POST";
         $this->ResponseBody = null;
         $this->ResponseInfo = null;
-        $this->Data = null;
+        $this->Data = utf8_encode($QueryString);
+
         $this->Cred = $Credentials;
 
         $this->Execute();
@@ -48,9 +49,11 @@ class GQLRestRequest {
      */
     private function setCurlOpts(&$curlHandle) {
         curl_setopt($curlHandle, CURLOPT_TIMEOUT, 30);
+        curl_setopt($curlHandle, CURLOPT_POST, true);
         curl_setopt($curlHandle, CURLOPT_URL, $this->UriGQLQuery);
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curlHandle, CURLOPT_HTTPHEADER, array('Accept: ' . $this->acceptType));
+        curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $this->Data);
+        curl_setopt($curlHandle, CURLOPT_HTTPHEADER, array('Accept: ' . $this->acceptType,"Content-length: ".strlen($this->Data),));
     }
 
     private function setAuth(&$curlHandle) {

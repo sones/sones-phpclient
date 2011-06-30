@@ -18,7 +18,7 @@ and open the template in the editor.
 
             $query = $_GET["q"];
             if($query !== null){
-             $GraphDSClient = new GraphDBClient("localhost", "test", "test");
+             $GraphDSClient = new GraphDBClient("127.0.0.1", "test", "test",9975);
              $QueryResult = $GraphDSClient->Query($query);
 
              if($QueryResult !== null){

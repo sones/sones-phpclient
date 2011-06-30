@@ -33,7 +33,7 @@ include_once "RESTClient/GQLRestRequest.class.php";
 
 class GraphDBClient{
 	
-    private $GQLUriTemplate = "gql?";
+    private $GQLUriTemplate = "gql";
     private $Host = "";
     private $Username = "";
     private $Password = "";
@@ -50,9 +50,8 @@ class GraphDBClient{
     }
     
     public function Query($myGQLQuery){
-    	$query_string = urlencode($myGQLQuery);
-        //execute the request
-        $result = new GQLRestRequest($this->Uri . $query_string, new RestCredentials($this->Username, $this->Password), "application/xml");
+    	//execute the request
+        $result = new GQLRestRequest($this->Uri, $myGQLQuery, new RestCredentials($this->Username, $this->Password), "application/xml");
         $tem = $result->getResponseBody();
         //build the result
         if ($tem != false) {
